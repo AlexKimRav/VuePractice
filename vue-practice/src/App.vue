@@ -1,14 +1,14 @@
 <template>
-    <my-label>
-        <h2 style="text-align: center;">Полезные ссылки</h2>
-        <div>
-            <a :href="UrlHW" target="_blank">Java roadmap</a>
-        </div>
+
+    <!-- Практика -->
+
+    <my-window>
+        
         <br/>
-        <my-button @click="isExist = !isExist">
+        <my-button @click="isExistFirstLabel = !isExistFirstLabel">
             Показать\скрыть текст
         </my-button>
-        <div v-if="isExist">
+        <div v-if="isExistFirstLabel">
         <div>
             <h1>{{ product }}</h1>
             <img v-bind:src="defaultImage" width="320" height="180">
@@ -28,39 +28,64 @@
             <my-button>
                 {{ bookCount }}
             </my-button>
+            <h2 style="text-align: center;">Полезные ссылки</h2>
+        <div>
+            <a :href="UrlHW" target="_blank">Java roadmap</a>
+        </div>
         </div>
         
     </div>
     <div v-else><h1>Nothing here</h1></div>
-</my-label>
-    <my-label >
-        <my-submit @review-submitted="addReview"></my-submit>
-    </my-label>
-    <my-label v-if="reviews.length">
-        <review-list  :reviews="reviews"></review-list>
-    </my-label>
+    </my-window>
 
+    <!-- Ревью -->
+
+    <my-window >
+        <review-form @review-submitted="addReview"></review-form>
+    </my-window>
+
+
+    <my-window v-if="reviews.length">
+        <review-list  :reviews="reviews"></review-list>
+    </my-window>
+
+    <!-- Посты -->
     <my-button @click="fetchPosts">Получение постов</my-button>
-    <my-label v-if="posts.length">
-        <post-list :posts="posts">
+    
+    <my-button>
+        Создать пост
+    </my-button>
+    
+    <my-button  v-if="posts.length"
+    @click="isExistSecondLabel = !isExistSecondLabel"
+    >Показать\скрыть посты
+    </my-button>
+
+    <my-dialog v-model:show="PostDialogVisible">
+
+    </my-dialog>
+    
+    <my-window v-if="posts.length" v-show="isExistSecondLabel">
+        <post-list 
+        :posts="posts" 
+        @remove="removePost">
 
         </post-list>
-    
-    </my-label>
+    </my-window>
 
 </template>
 
 <script>
 
-import AutorList from '@/components/AutorList'
-import MySubmit from '@/components/MySubmit'
-import ReviewList from '@/components/ReviewList'
-import PostList from '@/components/PostList'
+import AutorList from '@/components/Autors/AutorList'
+import ReviewForm from '@/components/Reviews/ReviewForm'
+import ReviewList from '@/components/Reviews/ReviewList'
+import PostList from '@/components/Posts/PostList'
 import axios from 'axios'
 
     export default {
         components: {
-            AutorList,MySubmit,ReviewList,PostList
+            AutorList,ReviewForm,ReviewList,PostList
         },
         data() {
             return {
@@ -73,7 +98,8 @@ import axios from 'axios'
                     {imgId: 2, imgName: 'Nothing', imgColor:'grey', imgPath: require('D:/desktop/VuePractice/vue-practice/src/assets/images/nothing.png')}
                 ],
                 UrlHW: 'https://drive.google.com/file/d/1NEsxE-9FCpxAty7GwW7MULgivZIQwlEA/view',
-                isExist: false,
+                isExistFirstLabel: false,
+                isExistSecondLabel: true,
                 autors: [
                     { id:1,
                     autorName: 'Franz Kafka',
@@ -87,6 +113,7 @@ import axios from 'axios'
                 reviews: [],
                 posts: [],
                 postsURL: "https://jsonplaceholder.typicode.com/posts?_limit=10",
+                PostDialogVisible: false
                 
             }
         },

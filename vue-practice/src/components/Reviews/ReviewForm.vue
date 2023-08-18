@@ -24,7 +24,7 @@
 
 <script>
     export default {
-        name: 'my-submit',
+        name: 'review-form',
         data() {
             return {
                 name: '',

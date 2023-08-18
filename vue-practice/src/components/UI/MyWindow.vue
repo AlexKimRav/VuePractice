@@ -1,19 +1,19 @@
 <template>
-    <li class="li-list">
+    <div class="practice-window">
         <slot></slot>
-    </li>
+    </div>
 </template>
 
 <script>
     export default {
-        name: "my-label"
+        name: 'my-window'
     }
 </script>
 
 <style scoped>
-.li-list {
-    margin: 5px;
+.practice-window {
+    width: 60%;
+    border: 15px solid teal;
     padding: 1em;
-    border: 3px solid teal;
 }
 </style>

@@ -1,7 +1,13 @@
 !<template>
     <div>
         <ul>
-            <li v-for="autor in autors" :key="autor.id" :value="autor.autorName"> {{ autor.autorName }} : "{{ autor.bookName }}"</li>
+            <li 
+            v-for="autor in autors" 
+            :key="autor.id" 
+            :value="autor.autorName"
+            > 
+            {{ autor.autorName }} : "{{ autor.bookName }}"
+        </li>
         </ul>
     </div>
 </template>

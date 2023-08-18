@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import PostItem from '@/components/PostItem';
+import PostItem from '@/components/Posts/PostItem';
     export default {
         components: {PostItem},
         name: "post-list",

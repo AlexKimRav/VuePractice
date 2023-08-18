@@ -2,11 +2,15 @@
     <div>
         <h3>Reviews</h3>
         <ul>
-            <li v-for="review in reviews" :key="review.id" class="li-list">
+            <my-label 
+            v-for="review in reviews" 
+            :key="review.id" 
+            :post="post"
+            >
                 {{ review.name }} gave this {{ review.rating }} stars
                 <br/>
                 "{{review.review}}"
-            </li>
+            </my-label>
         </ul>
     </div>
 </template>
@@ -24,9 +28,5 @@
 </script>
 
 <style scoped>
-.li-list{
-    margin: 5px;
-    padding: 1em;
-    border: 3px solid teal;
-}
+
 </style>
