@@ -1,5 +1,5 @@
 <template>
-    <div class="practice-label">
+    <my-label>
         <h2 style="text-align: center;">Полезные ссылки</h2>
         <div>
             <a :href="UrlHW" target="_blank">Java roadmap</a>
@@ -22,7 +22,7 @@
             </div>
             <autor-list :autors="autors">
             </autor-list>
-            <my-button @click="AddToBucket" :class="{disabledButton : outOfStock}">
+            <my-button @click="addToBucket" :class="{disabledButton : outOfStock}">
                 Добавить в корзину
             </my-button>
             <my-button>
@@ -32,13 +32,21 @@
         
     </div>
     <div v-else><h1>Nothing here</h1></div>
-    </div>
-    <div class="practice-label">
+</my-label>
+    <my-label >
         <my-submit @review-submitted="addReview"></my-submit>
-    </div>
-    <div v-if="reviews.length" class="practice-label">
+    </my-label>
+    <my-label v-if="reviews.length">
         <review-list  :reviews="reviews"></review-list>
-    </div>
+    </my-label>
+
+    <my-button @click="fetchPosts">Получение постов</my-button>
+    <my-label v-if="posts.length">
+        <post-list :posts="posts">
+
+        </post-list>
+    
+    </my-label>
 
 </template>
 
@@ -47,10 +55,12 @@
 import AutorList from '@/components/AutorList'
 import MySubmit from '@/components/MySubmit'
 import ReviewList from '@/components/ReviewList'
+import PostList from '@/components/PostList'
+import axios from 'axios'
 
     export default {
         components: {
-            AutorList,MySubmit,ReviewList
+            AutorList,MySubmit,ReviewList,PostList
         },
         data() {
             return {
@@ -75,6 +85,8 @@ import ReviewList from '@/components/ReviewList'
                 }
                 ],
                 reviews: [],
+                posts: [],
+                postsURL: "https://jsonplaceholder.typicode.com/posts?_limit=10",
                 
             }
         },
@@ -85,7 +97,7 @@ import ReviewList from '@/components/ReviewList'
                 this.defaultImage = imageName
             },
 
-            AddToBucket() {
+            addToBucket() {
                 if(this.outOfStock) return
                 if(this.bookCount === 1) {
                     this.bookCount--;
@@ -98,20 +110,36 @@ import ReviewList from '@/components/ReviewList'
             },
 
             addReview(review) {
+                console.log(review);
                 this.reviews.push(review);
-                console.log(this.reviews);
-            }
+            },
+
+            async fetchPosts() {
+                try {
+                    const response = await axios.get(this.postsURL)
+                    this.posts = response.data
+                    console.log(this.posts);
+                    
+                } catch(e){
+                    alert("Ошибка")
+                }
+
+                // fetch(this.postsURL)
+                //     .then(response => response.json())
+                //     .then(data => this.posts = data)
+                //     .catch(err => console.error(err))
+                
+            },
+
+            removePost(post) {
+            this.posts = this.posts.filter(p => p.id !== post.id)
+            },
             
         }
     }
 </script>
 
 <style>    
-.practice-label {
-    width: 50%;
-    border: 15px solid teal;
-    padding: 1em;
-}
 .color-circle {
     width: 50px;
     height: 50px;
