@@ -52,7 +52,7 @@
     <!-- Посты -->
     <my-button @click="fetchPosts">Получение постов</my-button>
     
-    <my-button>
+    <my-button @click="PostDialogVisible = true">
         Создать пост
     </my-button>
     
@@ -62,7 +62,10 @@
     </my-button>
 
     <my-dialog v-model:show="PostDialogVisible">
-
+        <post-form 
+        @post-submited="addPost"
+        >
+        </post-form>
     </my-dialog>
     
     <my-window v-if="posts.length" v-show="isExistSecondLabel">
@@ -80,12 +83,13 @@
 import AutorList from '@/components/Autors/AutorList'
 import ReviewForm from '@/components/Reviews/ReviewForm'
 import ReviewList from '@/components/Reviews/ReviewList'
+import PostForm from '@/components/Posts/PostForm'
 import PostList from '@/components/Posts/PostList'
 import axios from 'axios'
 
     export default {
         components: {
-            AutorList,ReviewForm,ReviewList,PostList
+            AutorList,ReviewForm,ReviewList,PostForm,PostList
         },
         data() {
             return {
@@ -156,6 +160,11 @@ import axios from 'axios'
                 //     .then(data => this.posts = data)
                 //     .catch(err => console.error(err))
                 
+            },
+            addPost(post) {
+                this.posts.push(post);
+                console.log(this.posts);
+                this.PostDialogVisible = false;
             },
 
             removePost(post) {
