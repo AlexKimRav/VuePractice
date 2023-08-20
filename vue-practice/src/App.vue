@@ -1,7 +1,7 @@
 <template>
 
     <!-- Практика -->
-
+    <div class="practice">
     <my-window>
         
         <br/>
@@ -37,22 +37,25 @@
     </div>
     <div v-else><h1>Nothing here</h1></div>
     </my-window>
+    </div>
 
     <!-- Ревью -->
-
+    <div class="reviews">
     <my-window >
         <review-form @review-submitted="addReview"></review-form>
     </my-window>
 
 
     <my-window v-if="reviews.length">
-        <review-list  :reviews="reviews"></review-list>
+        <review-list  :reviews="reviews"
+        @removeReview="removeReview"></review-list>
     </my-window>
-
+    </div>
     <!-- Посты -->
+    <div class="posts">
     <my-button @click="fetchPosts">Получение постов</my-button>
     
-    <my-button @click="PostDialogVisible = true">
+    <my-button v-if="posts.length" @click="PostDialogVisible = true">
         Создать пост
     </my-button>
     
@@ -71,11 +74,11 @@
     <my-window v-if="posts.length" v-show="isExistSecondLabel">
         <post-list 
         :posts="posts" 
-        @remove="removePost">
+        @removePost="removePost">
 
         </post-list>
     </my-window>
-
+</div>
 </template>
 
 <script>
@@ -144,6 +147,9 @@ import axios from 'axios'
                 console.log(review);
                 this.reviews.push(review);
             },
+            removeReview(review) {
+                this.reviews = this.reviews.filter(p => p.id !== review.id)
+            },
 
             async fetchPosts() {
                 try {
@@ -168,7 +174,7 @@ import axios from 'axios'
             },
 
             removePost(post) {
-            this.posts = this.posts.filter(p => p.id !== post.id)
+                this.posts = this.posts.filter(p => p.id !== post.id)
             },
             
         }

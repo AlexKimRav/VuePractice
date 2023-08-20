@@ -26,7 +26,7 @@
             onSubmit() {
                 //validation
                     if(this.title === '' || this.body === '') {
-                        alert("Fill the inputs")
+                        alert("Please fill out every field")
                         return
                     }
                 //obj
@@ -52,5 +52,8 @@
     width: 100%;
     height: 4em;
     border: 3px solid teal;
+}
+.button {
+    margin-top: 1em;
 }
 </style>

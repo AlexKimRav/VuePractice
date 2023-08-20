@@ -4,7 +4,7 @@
     v-for="post in posts"
     :post=post
     :key="post.id"
-    @remove="$emit('remove', post)"
+    @removePost="$emit('removePost', post)"
     >
     </post-item>
 </template>

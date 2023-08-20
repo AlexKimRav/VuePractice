@@ -1,18 +1,16 @@
 <template>
 <div>
-    <div class = "post">
+    <my-label class = "post">
         <div>
             <div><strong>Id:</strong> {{ post.id }}</div> <!-- TODO Позже убрать -->            
             <div><strong>Название:</strong> {{ post.title }}</div>
             <div><strong>Описание:</strong> {{ post.body }}</div>
         </div>
-        <div class="post__btns">
             <my-button
-                @click="$emit('remove', post)"
+                @click="$emit('removePost', post)"
                 >Удалить
             </my-button>
-        </div>
-    </div>
+    </my-label>
 </div>        
 </template>
 
@@ -30,9 +28,6 @@
 
 <style scoped>
 .post {
-    margin-top: 1em;
-    padding: 1em;
-    border: 3px solid teal;
     display: flex;
     align-items: center;
     justify-content: space-between;
