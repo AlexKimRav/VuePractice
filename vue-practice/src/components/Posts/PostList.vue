@@ -1,5 +1,5 @@
 <template>
-    <h3>Список постов</h3>
+    <h3>Posts list</h3>
     <post-item 
     v-for="post in posts"
     :post=post

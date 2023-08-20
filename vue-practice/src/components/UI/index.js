@@ -1,10 +1,10 @@
 import MyButton from "@/components/UI/MyButton"
 import MyWindow from "@/components/UI/MyWindow"
-import MyModal from "@/components/UI/MyModal" 
+import MyDialog from "@/components/UI/MyDialog" 
 import MyLabel from "@/components/UI/MyLabel"
 
 
 
 export default [
-    MyButton, MyWindow, MyModal, MyLabel
+    MyButton, MyWindow, MyDialog, MyLabel
 ]

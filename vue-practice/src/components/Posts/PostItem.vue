@@ -3,12 +3,12 @@
     <my-label class = "post">
         <div>
             <div><strong>Id:</strong> {{ post.id }}</div> <!-- TODO Позже убрать -->            
-            <div><strong>Название:</strong> {{ post.title }}</div>
-            <div><strong>Описание:</strong> {{ post.body }}</div>
+            <div><strong>Title:</strong> {{ post.title }}</div>
+            <div><strong>Description:</strong> {{ post.body }}</div>
         </div>
             <my-button
                 @click="$emit('removePost', post)"
-                >Удалить
+                >Delete
             </my-button>
     </my-label>
 </div>        

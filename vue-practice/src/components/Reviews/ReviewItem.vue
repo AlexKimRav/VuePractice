@@ -6,7 +6,7 @@
                 <br/>
                 "{{review.review}}"
 
-                <my-button @click="$emit('removeReview',review)">Удалить</my-button>
+                <my-button @click="$emit('removeReview',review)">Delete</my-button>
             </div>
     </my-label>
     </div>

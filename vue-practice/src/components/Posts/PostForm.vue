@@ -1,7 +1,7 @@
 <template>
     <div>
         <form class="post-form" @submit.prevent="onSubmit">
-            <h3>Создание поста</h3>
+            <h3>Create post</h3>
             <label for="title">Title:</label>
             <input class="input" id="title" v-model="title">
 

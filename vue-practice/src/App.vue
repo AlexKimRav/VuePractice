@@ -1,16 +1,31 @@
 <template>
 
-    <!-- Практика -->
-    <div class="practice">
-    <my-window>
-        
-        <br/>
-        <my-button @click="isExistFirstLabel = !isExistFirstLabel">
-            Показать\скрыть текст
-        </my-button>
-        <div v-if="isExistFirstLabel">
+    <!-- Main buttons -->
+
+    <div class="tabs">
+        <my-window>
+        <h1>Main Buttons</h1>
         <div>
-            <h1>{{ product }}</h1>
+            <my-button @click="showPracticeTab = !showPracticeTab">Show/Hide Practice</my-button>
+        </div>
+        <div>
+            <my-button @click="ReviewDialogVisible = !ReviewDialogVisible">Create Review</my-button>
+            <my-button @click="showReviewsTab = !showReviewsTab">Show/hide reviews</my-button>
+        </div>
+        <div>
+            <my-button @click="fetchPosts">Fetch posts</my-button>
+            <my-button @click="showPostTab = !showPostTab">show\hide posts</my-button>
+            <my-button v-if="posts.length" @click="PostDialogVisible = true">Create post</my-button>
+        </div>
+        </my-window>
+    </div>
+    
+    <!-- Practice -->
+
+    <div class="main">
+    <my-window v-show="showPracticeTab">
+        <div>
+            <h2>Practice</h2>
             <img v-bind:src="defaultImage" width="320" height="180">
             <div> 
                 <div v-for="image in images" 
@@ -23,46 +38,44 @@
             <autor-list :autors="autors">
             </autor-list>
             <my-button @click="addToBucket" :class="{disabledButton : outOfStock}">
-                Добавить в корзину
+                Add to bucket
             </my-button>
             <my-button>
                 {{ bookCount }}
             </my-button>
-            <h2 style="text-align: center;">Полезные ссылки</h2>
+            <h2 style="text-align: center;">Some useful links</h2>
         <div>
             <a :href="UrlHW" target="_blank">Java roadmap</a>
         </div>
         </div>
         
-    </div>
-    <div v-else><h1>Nothing here</h1></div>
     </my-window>
     </div>
 
-    <!-- Ревью -->
+    <!-- Reviews -->
+
     <div class="reviews">
-    <my-window >
+        
+
+    <my-dialog v-model:show="ReviewDialogVisible">
         <review-form @review-submitted="addReview"></review-form>
-    </my-window>
-
-
-    <my-window v-if="reviews.length">
+    </my-dialog>
+    
+    <my-window v-show="showReviewsTab">
+    <div  v-if="reviews.length">
         <review-list  :reviews="reviews"
         @removeReview="removeReview"></review-list>
-    </my-window>
     </div>
-    <!-- Посты -->
+    <div v-else><h2>No reviews</h2></div>
+    </my-window>
+    
+    
+    </div>
+
+    <!-- Posts -->
+
     <div class="posts">
-    <my-button @click="fetchPosts">Получение постов</my-button>
     
-    <my-button v-if="posts.length" @click="PostDialogVisible = true">
-        Создать пост
-    </my-button>
-    
-    <my-button  v-if="posts.length"
-    @click="isExistSecondLabel = !isExistSecondLabel"
-    >Показать\скрыть посты
-    </my-button>
 
     <my-dialog v-model:show="PostDialogVisible">
         <post-form 
@@ -71,12 +84,12 @@
         </post-form>
     </my-dialog>
     
-    <my-window v-if="posts.length" v-show="isExistSecondLabel">
-        <post-list 
+    <my-window  v-show="showPostTab">
+        <post-list v-if="posts.length"
         :posts="posts" 
         @removePost="removePost">
-
         </post-list>
+        <div v-else><h2>No Posts</h2></div>
     </my-window>
 </div>
 </template>
@@ -96,7 +109,7 @@ import axios from 'axios'
         },
         data() {
             return {
-                product: 'book',
+                showPracticeTab: false,
                 bookCount: 5,
                 outOfStock: false,
                 defaultImage: require('D:/desktop/VuePractice/vue-practice/src/assets/images/Open_book_nae_02.svg.png'),
@@ -105,8 +118,6 @@ import axios from 'axios'
                     {imgId: 2, imgName: 'Nothing', imgColor:'grey', imgPath: require('D:/desktop/VuePractice/vue-practice/src/assets/images/nothing.png')}
                 ],
                 UrlHW: 'https://drive.google.com/file/d/1NEsxE-9FCpxAty7GwW7MULgivZIQwlEA/view',
-                isExistFirstLabel: false,
-                isExistSecondLabel: true,
                 autors: [
                     { id:1,
                     autorName: 'Franz Kafka',
@@ -117,10 +128,14 @@ import axios from 'axios'
                     bookName: 'Old man and sea'
                 }
                 ],
+                showReviewsTab: false,
+                ReviewDialogVisible: false,
                 reviews: [],
                 posts: [],
                 postsURL: "https://jsonplaceholder.typicode.com/posts?_limit=10",
-                PostDialogVisible: false
+                PostDialogVisible: false,
+                showPostTab: false,
+
                 
             }
         },
@@ -146,6 +161,8 @@ import axios from 'axios'
             addReview(review) {
                 console.log(review);
                 this.reviews.push(review);
+                this.ReviewDialogVisible= false;
+                this.showReviewsTab = true;
             },
             removeReview(review) {
                 this.reviews = this.reviews.filter(p => p.id !== review.id)
@@ -156,6 +173,7 @@ import axios from 'axios'
                     const response = await axios.get(this.postsURL)
                     this.posts = response.data
                     console.log(this.posts);
+                    this.showPostTab = true;
                     
                 } catch(e){
                     alert("Ошибка")
