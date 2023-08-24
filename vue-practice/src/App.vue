@@ -141,7 +141,8 @@ import axios from 'axios'
                 selectedSort: '',
                 sortOptions: [
                     {value: 'title', name: 'By title'},
-                    {value: 'body', name: 'By description'}
+                    {value: 'body', name: 'By description'},
+                    {value: 'id', name: 'By id'}
                 ]
                 
             }
@@ -205,7 +206,15 @@ import axios from 'axios'
         },
         computed: {
             sortedPosts() {
+                if(this.selectedSort === 'id') {
+                    return this.posts.sort((a, b) => {
+                        if (a.id < b.id) return -1;
+                        if (a.id > b.id) return 1;
+                        return 0;
+                })
+            }
                 return [...this.posts].sort((post1,post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]))
+                
             }
         }
     }
