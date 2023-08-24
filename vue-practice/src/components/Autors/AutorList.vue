@@ -14,6 +14,7 @@
 
 <script>
     export default {
+        name: "autor-list",
         props: {
             autors: {
                 type: Array,

@@ -75,7 +75,6 @@
     <!-- Posts -->
 
     <div class="posts">
-    
 
     <my-dialog v-model:show="PostDialogVisible">
         <post-form 
@@ -85,8 +84,12 @@
     </my-dialog>
     
     <my-window  v-show="showPostTab">
+        <my-select 
+        v-model="selectedSort"
+        :options="sortOptions">
+        </my-select>
         <post-list v-if="posts.length"
-        :posts="posts" 
+        :posts="sortedPosts" 
         @removePost="removePost">
         </post-list>
         <div v-else><h2>No Posts</h2></div>
@@ -105,7 +108,7 @@ import axios from 'axios'
 
     export default {
         components: {
-            AutorList,ReviewForm,ReviewList,PostForm,PostList
+            AutorList,ReviewForm,ReviewList,PostForm,PostList,
         },
         data() {
             return {
@@ -135,7 +138,11 @@ import axios from 'axios'
                 postsURL: "https://jsonplaceholder.typicode.com/posts?_limit=10",
                 PostDialogVisible: false,
                 showPostTab: false,
-
+                selectedSort: '',
+                sortOptions: [
+                    {value: 'title', name: 'By title'},
+                    {value: 'body', name: 'By description'}
+                ]
                 
             }
         },
@@ -173,9 +180,10 @@ import axios from 'axios'
                     const response = await axios.get(this.postsURL)
                     this.posts = response.data
                     console.log(this.posts);
-                    this.showPostTab = true;
+                        this.showPostTab = true;
                     
                 } catch(e){
+                    console.log(e);
                     alert("Ошибка")
                 }
 
@@ -194,7 +202,11 @@ import axios from 'axios'
             removePost(post) {
                 this.posts = this.posts.filter(p => p.id !== post.id)
             },
-            
+        },
+        computed: {
+            sortedPosts() {
+                return [...this.posts].sort((post1,post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]))
+            }
         }
     }
 </script>
