@@ -1,5 +1,5 @@
 <template>
-        <select :value="modelValue" @change="changeOption">
+        <select class="select" :value="modelValue" @change="changeOption">
             <option disabled value="">Choose the option</option>
             <option v-for="option in options" 
             :key=option.value
@@ -31,5 +31,15 @@
 </script>
 
 <style scoped>
+.select {
+    height: 3rem;
+    background-color: teal;
+    color: white;
+    border: 0.1rem solid black;
+}
 
+.select:hover {
+    background-color: black;
+
+}
 </style>

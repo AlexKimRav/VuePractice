@@ -2,11 +2,8 @@
     <div>
         <form class="post-form" @submit.prevent="onSubmit">
             <h3>Create post</h3>
-            <label for="title">Title:</label>
-            <input class="input" id="title" v-model="title">
-
-            <label for="body">Body:</label>
-            <input class="input" id="body" v-model="body">
+            <my-input   v-model="title" placeholder="Title"/>
+            <my-input  v-model="body" placeholder="Description"/>
 
             <my-button type="submit" class="button">Submit</my-button>
         </form>
@@ -48,11 +45,6 @@
 </script>
 
 <style scoped>
-.input {
-    width: 100%;
-    height: 4em;
-    border: 3px solid teal;
-}
 .button {
     margin-top: 1em;
 }

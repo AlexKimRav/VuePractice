@@ -9,13 +9,11 @@
             <my-button @click="showPracticeTab = !showPracticeTab">Show/Hide Practice</my-button>
         </div>
         <div>
-            <my-button @click="ReviewDialogVisible = !ReviewDialogVisible">Create Review</my-button>
             <my-button @click="showReviewsTab = !showReviewsTab">Show/hide reviews</my-button>
         </div>
         <div>
             <my-button @click="fetchPosts">Fetch posts</my-button>
             <my-button @click="showPostTab = !showPostTab">show\hide posts</my-button>
-            <my-button v-if="posts.length" @click="PostDialogVisible = true">Create post</my-button>
         </div>
         </my-window>
     </div>
@@ -62,6 +60,7 @@
     </my-dialog>
     
     <my-window v-show="showReviewsTab">
+        <my-button @click="ReviewDialogVisible = !ReviewDialogVisible">Create Review</my-button>
     <div  v-if="reviews.length">
         <review-list  :reviews="reviews"
         @removeReview="removeReview"></review-list>
@@ -84,12 +83,16 @@
     </my-dialog>
     
     <my-window  v-show="showPostTab">
-        <my-select 
-        v-model="selectedSort"
-        :options="sortOptions">
+        <div style="display: flex; justify-content: space-between;">
+            <my-button  @click="PostDialogVisible = true">Create post</my-button>
+            <my-select 
+            v-model="selectedSort"
+            :options="sortOptions">
         </my-select>
+        </div>
+        <my-input v-model="searchQuery" placeholder="search"/>
         <post-list v-if="posts.length"
-        :posts="sortedPosts" 
+        :posts="sortedAndSearchedPosts" 
         @removePost="removePost">
         </post-list>
         <div v-else><h2>No Posts</h2></div>
@@ -143,7 +146,8 @@ import axios from 'axios'
                     {value: 'title', name: 'By title'},
                     {value: 'body', name: 'By description'},
                     {value: 'id', name: 'By id'}
-                ]
+                ],
+                searchQuery: ''
                 
             }
         },
@@ -214,7 +218,10 @@ import axios from 'axios'
                 })
             }
                 return [...this.posts].sort((post1,post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]))
-                
+            },
+            sortedAndSearchedPosts() {
+                console.log(`changed:  ${this.sortedAndSearchedPosts}`);
+                return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
             }
         }
     }
