@@ -60,9 +60,17 @@
     </my-dialog>
     
     <my-window v-show="showReviewsTab">
+        <div class="dialog-nav">
         <my-button @click="ReviewDialogVisible = !ReviewDialogVisible">Create Review</my-button>
+        <my-select 
+            v-model="selectedSortReview"
+            :options="reviewSortOptions">
+            </my-select>
+        </div>
+        <my-input v-model="searchQueryReview" placeholder="search by name"/>
+
     <div  v-if="reviews.length">
-        <review-list  :reviews="reviews"
+        <review-list  :reviews="sortedAndSearchedReviews"
         @removeReview="removeReview"></review-list>
     </div>
     <div v-else><h2>No reviews</h2></div>
@@ -83,14 +91,14 @@
     </my-dialog>
     
     <my-window  v-show="showPostTab">
-        <div style="display: flex; justify-content: space-between;">
+        <div class="dialog-nav">
             <my-button  @click="PostDialogVisible = true">Create post</my-button>
             <my-select 
-            v-model="selectedSort"
-            :options="sortOptions">
-        </my-select>
+            v-model="selectedSortPost"
+            :options="postSortOptions">
+            </my-select>
         </div>
-        <my-input v-model="searchQuery" placeholder="search"/>
+        <my-input v-model="searchQueryPost" placeholder="search by title"/>
         <post-list v-if="posts.length"
         :posts="sortedAndSearchedPosts" 
         @removePost="removePost">
@@ -141,13 +149,22 @@ import axios from 'axios'
                 postsURL: "https://jsonplaceholder.typicode.com/posts?_limit=10",
                 PostDialogVisible: false,
                 showPostTab: false,
-                selectedSort: '',
-                sortOptions: [
+                selectedSortPost: '',
+                selectedSortReview: '',
+                postSortOptions: [
                     {value: 'title', name: 'By title'},
                     {value: 'body', name: 'By description'},
                     {value: 'id', name: 'By id'}
                 ],
-                searchQuery: ''
+                reviewSortOptions: [
+                    {value: 'id', name: 'By Id'},
+                    {value: 'name', name: 'By Name'},
+                    {value: 'review', name: 'By Review'},
+                    {value: 'rating', name: 'By Rating'},
+
+                ],
+                searchQueryPost: '',
+                searchQueryReview: ''
                 
             }
         },
@@ -209,19 +226,42 @@ import axios from 'axios'
             },
         },
         computed: {
+            sortedReviews() {
+                if(this.selectedSortReview === 'id') {
+                    return this.reviews.sort((a, b) => {
+                        if (a.id < b.id) return -1;
+                        if (a.id > b.id) return 1;
+                        return 0;
+                }) 
+            }
+                else if (this.selectedSortReview === 'rating') {
+                    return this.reviews.sort((a, b) => {
+                        if (a.rating < b.rating) return -1;
+                        if (a.rating > b.rating) return 1;
+                        return 0;
+                })          
+                }
+
+                return [...this.reviews].sort((review1,review2) => review1[this.selectedSortReview]?.localeCompare(review2[this.selectedSortReview]))
+            },
+            
+            sortedAndSearchedReviews() {
+                return this.sortedReviews.filter(review => review.name.toLowerCase().includes(this.searchQueryReview.toLowerCase()))
+            },
+
+            
             sortedPosts() {
-                if(this.selectedSort === 'id') {
+                if(this.selectedSortPost === 'id') {
                     return this.posts.sort((a, b) => {
                         if (a.id < b.id) return -1;
                         if (a.id > b.id) return 1;
                         return 0;
                 })
             }
-                return [...this.posts].sort((post1,post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]))
+                return [...this.posts].sort((post1,post2) => post1[this.selectedSortPost]?.localeCompare(post2[this.selectedSortPost]))
             },
             sortedAndSearchedPosts() {
-                console.log(`changed:  ${this.sortedAndSearchedPosts}`);
-                return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
+                return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchQueryPost.toLowerCase()))
             }
         }
     }
@@ -238,5 +278,10 @@ import axios from 'axios'
 
 .disabledButton {
     cursor: not-allowed;
+}
+
+.dialog-nav {
+    display: flex; 
+    justify-content: space-between;
 }
 </style>

@@ -3,19 +3,14 @@
         <form class="review-form" @submit.prevent="onSubmit">
             <h3>Leave a review</h3>
             <label for="name">Name:</label>
-            <input class="input" id="name" v-model="name">
+            <my-input  id="name" v-model="name"/>
 
             <label for="review">Review:</label>
-            <input class="input" id="review" v-model="review">
+            <my-input id="review" v-model="review"/>
 
             <label for="rating">Rating:</label>
-            <select class="input" id="rating" v-model.number="rating">
-                <option>5</option>
-                <option>4</option>
-                <option>3</option>
-                <option>2</option>
-                <option>1</option>
-            </select>
+            <my-select class="input" id="rating" v-model.number="rating" :options="options">
+            </my-select>
             <!-- <input class="button" type="submit" value="Submit"> -->
             <my-button type="submit" class="button">Submit</my-button>
         </form>
@@ -29,7 +24,14 @@
             return {
                 name: '',
                 review: '',
-                rating: null
+                rating: null,
+                options: [
+                {name: 'one star', value: 1},
+                {name: 'two stars', value: 2},
+                {name: 'three stars', value: 3},
+                {name: 'four stars', value: 4},
+                {name: 'five stars', value: 5}
+                ]
             }
         },
         methods: {
@@ -60,11 +62,6 @@
 </script>
 
 <style scoped>
-.input {
-    width: 100%;
-    height: 4em;
-    border: 3px solid teal;
-}
 .review-form  label {
     display: block;
     margin-top: 1em;

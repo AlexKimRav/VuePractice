@@ -15,7 +15,7 @@
          name: 'my-select',
          props: {
             modelValue: {
-                type: String,
+                type: [String,Number],
             },
             options: {
                 type: Array,
@@ -33,13 +33,6 @@
 <style scoped>
 .select {
     height: 3rem;
-    background-color: teal;
-    color: white;
-    border: 0.1rem solid black;
-}
-
-.select:hover {
-    background-color: black;
-
+    border: 0.2rem solid teal;
 }
 </style>
