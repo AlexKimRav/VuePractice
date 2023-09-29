@@ -1,0 +1,71 @@
+[33mcommit 478cad648052291470896442b5181cb4194d0a87[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: AlexKimRav <ravenq1113@gmail.com>
+Date:   Mon Aug 28 18:10:12 2023 +0900
+
+    search,select, input for reviews
+
+[33mcommit 539040f5084b04ab8454b92971d4578c3cf1430d[m
+Author: AlexKimRav <ravenq1113@gmail.com>
+Date:   Mon Aug 28 14:52:32 2023 +0900
+
+    my-input, list Animation
+
+[33mcommit 95e8315b2b68f898c8aa18a545f06b03dfb065c5[m
+Author: AlexKimRav <ravenq1113@gmail.com>
+Date:   Thu Aug 24 23:23:00 2023 +0900
+
+    computed select by Id
+
+[33mcommit 7378530d1eb2862144812f4429e055355e4630f5[m
+Author: AlexKimRav <ravenq1113@gmail.com>
+Date:   Thu Aug 24 23:16:54 2023 +0900
+
+    Selection by name,title; computed
+
+[33mcommit 188ae91e7d7c384e270912a2bfca381e50c06162[m
+Author: AlexKimRav <ravenq1113@gmail.com>
+Date:   Sun Aug 20 21:10:17 2023 +0900
+
+    Dialog window for reviewForm, all Button in main, ru => en
+
+[33mcommit 6c1b901f9a81c1fde61a336219efad94be892e2d[m
+Author: AlexKimRav <ravenq1113@gmail.com>
+Date:   Sun Aug 20 19:59:24 2023 +0900
+
+    ReviewItem, removeItem, Css styles fix
+
+[33mcommit 5d9e84b4157ad321d41895fbcec827ce095367d8[m
+Author: AlexKimRav <ravenq1113@gmail.com>
+Date:   Sun Aug 20 18:43:49 2023 +0900
+
+    postForm
+
+[33mcommit ab4fba8556620fc2ef4678cea7b02f2d001ca44a[m
+Author: AlexKimRav <ravenq1113@gmail.com>
+Date:   Sat Aug 19 05:50:08 2023 +0900
+
+    Review,post, UI components
+
+[33mcommit 813a3aa83a1751ce78398b3fd48a138a532d8d47[m
+Author: AlexKimRav <ravenq1113@gmail.com>
+Date:   Fri Aug 18 19:20:48 2023 +0900
+
+    MyLabel component, PostList,PostItem, axios,fetch, validation for Submit
+
+[33mcommit 10f7ed811738c3f91dfa99670f1fc344e4a23672[m
+Author: AlexKimRav <ravenq1113@gmail.com>
+Date:   Thu Aug 17 22:57:47 2023 +0900
+
+    ReviewProp submit and review
+
+[33mcommit 562cc00709b8f4ab2c69b3539b3d66894ba2f45c[m
+Author: AlexKimRav <ravenq1113@gmail.com>
+Date:   Mon Aug 14 16:29:05 2023 +0900
+
+    Component Registration
+
+[33mcommit 100b63bcce2360610df434c52efafcebf04dd5ce[m
+Author: AlexKimRav <ravenq1113@gmail.com>
+Date:   Tue Aug 8 18:29:44 2023 +0900
+
+    first commit

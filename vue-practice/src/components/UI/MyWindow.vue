@@ -12,6 +12,8 @@
 
 <style scoped>
 .practice-window {
+    margin-top: 0.5em;
+    margin-left: 0.5em;
     width: 60%;
     border: 15px solid teal;
     padding: 1em;

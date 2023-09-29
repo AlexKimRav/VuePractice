@@ -19,7 +19,7 @@
            review: {
             type: Object,
             required: true
-        }
+        },
     }
 }
 </script>

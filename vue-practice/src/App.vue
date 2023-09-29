@@ -42,8 +42,8 @@
                 {{ bookCount }}
             </my-button>
             <h2 style="text-align: center;">Some useful links</h2>
-        <div>
-            <a :href="UrlHW" target="_blank">Java roadmap</a>
+        <div v-for="item in UrlHW">
+            <a :href="item.url" target="_blank">{{ item.name }} roadmap</a>
         </div>
         </div>
         
@@ -106,6 +106,8 @@
         <div v-else><h2>No Posts</h2></div>
     </my-window>
 </div>
+
+<div ref="observer" class="observer"></div>
 </template>
 
 <script>
@@ -131,7 +133,11 @@ import axios from 'axios'
                     {imgId: 1, imgName: 'Book', imgColor:'green', imgPath: require('D:/desktop/VuePractice/vue-practice/src/assets/images/Open_book_nae_02.svg.png') },
                     {imgId: 2, imgName: 'Nothing', imgColor:'grey', imgPath: require('D:/desktop/VuePractice/vue-practice/src/assets/images/nothing.png')}
                 ],
-                UrlHW: 'https://drive.google.com/file/d/1NEsxE-9FCpxAty7GwW7MULgivZIQwlEA/view',
+                UrlHW: [
+                {name:'Java', url: 'https://drive.google.com/file/d/1NEsxE-9FCpxAty7GwW7MULgivZIQwlEA/view'},
+                {name:'Js', url: 'https://roadmap.sh/javascript'},
+                {name:'Vue', url: 'https://roadmap.sh/vue'},
+                ],
                 autors: [
                     { id:1,
                     autorName: 'Franz Kafka',
@@ -169,6 +175,18 @@ import axios from 'axios'
             }
         },
         mounted() {
+            const options = {
+                rootMargin: '0px',
+                threshold: 1.0
+            }
+            
+            const callback = function(entries,observer) {
+                if (entries[0].isIntersecting) {
+                    console.log('Пересечен');
+                }
+            }
+            const observer = new IntersectionObserver(callback,options);
+            observer.observe(this.$refs.observer)
         },
         methods: {
             updateImage(imageName) {
@@ -268,6 +286,12 @@ import axios from 'axios'
 </script>
 
 <style>    
+* {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+}
 .color-circle {
     width: 50px;
     height: 50px;
@@ -283,5 +307,10 @@ import axios from 'axios'
 .dialog-nav {
     display: flex; 
     justify-content: space-between;
+}
+
+.observer {
+    height: 10em;
+    background-color: rgb(1, 10, 64);
 }
 </style>
